@@ -210,10 +210,23 @@
             background-color: rgba(167, 197, 227, 0.1);
         }
         
+        .card-logos {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 0.8rem;
+        }
+        
+        .card-logo {
+            height: 30px;
+            width: auto;
+        }
+        
         .payment-method-icon {
-            width: 60px;
             height: 40px;
+            width: auto;
             margin: 0 auto 0.8rem;
+            object-fit: contain;
         }
         
         .payment-method-name {
@@ -563,17 +576,21 @@
                     
                     <div class="payment-methods">
                         <div class="payment-method selected" onclick="selectPaymentMethod(this, 'card')">
-                            <img src="https://cdn.pixabay.com/photo/2022/08/30/11/48/credit-card-7421245_640.png" alt="Carte bancaire" class="payment-method-icon">
+                            <div class="card-logos">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" class="card-logo">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" class="card-logo">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="American Express" class="card-logo">
+                            </div>
                             <div class="payment-method-name">Carte bancaire</div>
                         </div>
                         
                         <div class="payment-method" onclick="selectPaymentMethod(this, 'paypal')">
-                            <img src="https://cdn.pixabay.com/photo/2015/05/26/09/37/paypal-784404_640.png" alt="PayPal" class="payment-method-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal" class="payment-method-icon">
                             <div class="payment-method-name">PayPal</div>
                         </div>
                         
                         <div class="payment-method" onclick="selectPaymentMethod(this, 'apple')">
-                            <img src="https://cdn.pixabay.com/photo/2022/08/30/11/11/apple-pay-7421224_640.png" alt="Apple Pay" class="payment-method-icon">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg" alt="Apple Pay" class="payment-method-icon">
                             <div class="payment-method-name">Apple Pay</div>
                         </div>
                     </div>
@@ -660,9 +677,9 @@
                 </div>
                 
                 <div class="credit-card-icons">
-                    <img src="https://cdn.pixabay.com/photo/2022/08/30/11/48/credit-card-7421245_640.png" alt="Visa" class="credit-card-icon">
-                    <img src="https://cdn.pixabay.com/photo/2015/05/26/09/37/paypal-784404_640.png" alt="MasterCard" class="credit-card-icon">
-                    <img src="https://cdn.pixabay.com/photo/2022/08/30/11/11/apple-pay-7421224_640.png" alt="American Express" class="credit-card-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" class="credit-card-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="MasterCard" class="credit-card-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="American Express" class="credit-card-icon">
                 </div>
             </div>
             
@@ -744,3 +761,53 @@
             // Supprimer la classe selected de toutes les méthodes
             document.querySelectorAll('.payment-method').forEach(method => {
                 method.classList.remove('selected');
+            });
+            
+            // Ajouter la classe selected à la méthode choisie
+            element.classList.add('selected');
+            
+            // Afficher le formulaire correspondant (ici on ne gère que la carte)
+            if (method === 'card') {
+                document.getElementById('payment-form-card').style.display = 'block';
+            } else if (method === 'paypal') {
+                // Rediriger vers PayPal
+                // Pour une démo, on affiche juste une alerte
+                setTimeout(() => {
+                    alert("Vous allez être redirigé vers PayPal pour finaliser votre paiement");
+                }, 500);
+            } else if (method === 'apple') {
+                // Simuler ApplePay
+                setTimeout(() => {
+                    alert("Ouverture d'Apple Pay...");
+                }, 500);
+            }
+        }
+        
+        // Animer les étapes de progression lorsqu'on clique sur le bouton de paiement
+        document.querySelector('.payment-button').addEventListener('click', function() {
+            const steps = document.querySelectorAll('.step');
+            const step2 = steps[1];
+            
+            setTimeout(() => {
+                steps[0].classList.remove('active');
+                steps[0].classList.add('completed');
+                step2.classList.add('active');
+                
+                setTimeout(() => {
+                    // Simuler une vérification
+                    alert("Paiement validé ! Merci pour votre abonnement.");
+                    
+                    step2.classList.remove('active');
+                    step2.classList.add('completed');
+                    steps[2].classList.add('active');
+                    
+                    // Rediriger vers l'app après quelques secondes
+                    setTimeout(() => {
+                        window.location.href = 'app.html';
+                    }, 2000);
+                }, 1500);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
