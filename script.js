@@ -1,3 +1,29 @@
+// Ajouter au script.js existant
+
+// Définir l'URL de la page de paiement
+const paymentPageUrl = "payment.html"; // À remplacer par votre URL réelle
+
+// Mettre à jour tous les boutons d'upgrade
+document.addEventListener('DOMContentLoaded', function() {
+    // S'assurer que les onglets premium sont bien verrouillés
+    const premiumTabs = document.querySelectorAll('.tab-button[data-tab="history"], .tab-button[data-tab="stats"]');
+    premiumTabs.forEach(tab => {
+        tab.addEventListener('click', function(e) {
+            // Si ce n'est pas déjà fait, afficher la modal de plans
+            plansModal.style.display = 'flex';
+        });
+    });
+
+    // Rediriger les boutons d'abonnement vers la page de paiement
+    const subscribeButtons = document.querySelectorAll('.plan-cta .upgrade-button, #upgrade-from-modal');
+    subscribeButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Vous pouvez ajouter des paramètres à l'URL pour indiquer le plan choisi
+            window.location.href = paymentPageUrl;
+        });
+    });
+});
 // Variables
 let currentActivity = null;
 let timer = null;
