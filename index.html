@@ -658,7 +658,7 @@
                             </ul>
                         </div>
                         <div class="price-cta">
-                            <a href="#" class="cta-button">S'abonner</a>
+                            <a href="app.html" class="cta-button">S'abonner</a>
                         </div>
                     </div>
                     
@@ -678,7 +678,7 @@
                             </ul>
                         </div>
                         <div class="price-cta">
-                            <a href="#" class="secondary-button">Contacter</a>
+                            <a href="app.html" class="secondary-button">Contacter</a>
                         </div>
                     </div>
                 </div>
@@ -766,8 +766,8 @@
     <script>
         // Simple accordion for FAQ
         document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const answer = question.nextElementSibling;
+            question.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
                 const isOpen = answer.style.display === 'block';
                 
                 // Close all answers
@@ -804,3 +804,6 @@
                 }
             });
         });
+    </script>
+</body>
+</html>
