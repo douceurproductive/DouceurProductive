@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Douceur Productive | Votre programme quotidien</title>
+    <style>
+        :root {
+            --primary-bg: linear-gradient(135deg, #f8e1e7 0%, #e6f0f9 100%);
+            --accent-color: #a7c5e3;
+            --text-color: #5b6b8c;
+            --button-color: #a7c5e3;
+            --highlight: #f4adb5;
+            --card-bg: #f8f9fc;
+            --shadow: rgba(149, 157, 165, 0.1);
+            --font-main: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: var(--font-main);
+            background: var(--primary-bg);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        header {
+            padding: 1rem 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .logo span {
+            color: var(--highlight);
+        }
+        
+        .container {
+            max-width: 600px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 1.5rem;
+            box-sizing: border-box;
+        }
+        
+        .app-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .task-card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            box-shadow: 0 8px 15px var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        
+        .task-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px var(--shadow);
+        }
+        
+        .icon-container {
+            background: var(--accent-color);
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .icon {
+            width: 35px;
+            height: 35px;
+            fill: white;
+        }
+        
+        .task-info {
+            flex: 1;
+        }
+        
+        .task-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0 0 0.3rem 0;
+        }
+        
+        .task-desc {
+            margin: 0;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        .checkbox {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            display: inline-block;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            flex-shrink: 0;
+        }
+        
+        .checkbox.checked {
+            background-color: var(--accent-color);
+            position: relative;
+        }
+        
+        .checkbox.checked::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            top: 4px;
+            left: 9px;
+        }
+        
+        .start-button {
+            background: var(--button-color);
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            padding: 1rem 2.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 1.5rem 0;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(167, 197, 227, 0.4);
+        }
+        
+        .start-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .motivation-text {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+        
+        .timer-container {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 8px 15px var(--shadow);
+            display: none;
+        }
+        
+        .timer {
+            font-size: 2.5rem;
+            margin: 1rem 0;
+        }
+        
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .control-button {
+            background: var(--button-color);
+            color: white;
+            border: none;
+            border-radius: 1rem;
+            padding: 0.7rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .control-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .progress-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #e1e5ee;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-color);
+            width: 0%;
+            transition: width 1s;
+        }
+        
+        .task-complete-message {
+            background: var(--highlight);
+            color: white;
+            padding: 1rem;
+            border-radius: 1rem;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .back-link:hover {
+            color: var(--highlight);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: auto;
+            padding: 2rem 0;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 480px) {
+            .task-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.8rem;
+                padding: 1.5rem 1rem;
+            }
+            
+            .icon-container {
+                margin-bottom: 0.5rem;
+            }
+            
+            .checkbox {
+                margin-top: 0.8rem;
+            }
+            
+            .timer-controls {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .control-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">Douceur<span>Productive</span></a>
+    </header>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Retour à l'accueil</a>
+        
+        <div class="app-header">
+            <h1>Aujourd'hui,</h1>
+            <h2>ta mission est...</h2>
+        </div>
+        
+        <div class="task-list">
+            <div class="task-card" data-task="reading" data-time="10">
+                <div class="icon-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M6 22h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2zm0-2V4h12v16H6zm6-13a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                    </svg>
+                </div>
+                <div class="task-info">
+                    <h3 class="task-title">10 min de lecture</h3>
+                    <p class="task-desc">Prends un moment pour lire et te détendre</p>
+                </div>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+            </div>
+            
+            <div class="task-card" data-task="pomodoro" data-time="25">
+                <div class="icon-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+                        <path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z"/>
+                    </svg>
+                </div>
+                <div class="task-info">
+                    <h3 class="task-title">1 session de travail de 25 min</h3>
+                    <p class="task-desc">Concentre-toi sur une tâche importante</p>
+                </div>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+            </div>
+            
+            <div class="task-card" data-task="learning" data-time="15">
+                <div class="icon-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+                        <path d="M11 11h2v6h-2zm0-4h2v2h-2z"/>
+                    </svg>
+                </div>
+                <div class="task-info">
+                    <h3 class="task-title">Révision ou apprentissage</h3>
+                    <p class="task-desc">Apprends une nouvelle chose aujourd'hui</p>
+                </div>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+            </div>
+            
+            <div class="task-card" data-task="movement" data-time="15">
+                <div class="icon-container">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z"/>
+                    </svg>
+                </div>
+                <div class="task-info">
+                    <h3 class="task-title">15 min de marche ou d'étirement</h3>
+                    <p class="task-desc">Prends soin de ton corps</p>
+                </div>
+                <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+            </div>
+        </div>
+        
+        <div class="timer-container" id="timer-container">
+            <h3 id="timer-activity">Lecture</h3>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+            <div class="timer" id="timer">10:00</div>
+            <div class="timer-controls">
+                <button class="control-button" id="start-timer">Démarrer</button>
+                <button class="control-button" id="pause-timer">Pause</button>
+                <button class="control-button" id="reset-timer">Réinitialiser</button>
+            </div>
+            <div class="task-complete-message" id="complete-message">
+                Bravo ! Activité terminée ! 👏
+            </div>
+        </div>
+        
+        <button class="start-button" id="main-button">C'est parti !</button>
+        
+        <p class="motivation-text">Commence, même si c'est pas parfait.</p>
+    </div>
+    
+    <footer>
+        &copy; 2025 Douceur Productive. Tous droits réservés.
+    </footer>
+    
+    <script>
+        // Variables
+        let currentActivity = null;
+        let timer = null;
+        let timerRunning = false;
+        let timeLeft = 0;
+        let totalTime = 0;
+        
+        // DOM Elements
+        const mainButton = document.getElementById('main-button');
+        const timerContainer = document.getElementById('timer-container');
+        const timerDisplay = document.getElementById('timer');
+        const timerActivityName = document.getElementById('timer-activity');
+        const startTimerBtn = document.getElementById('start-timer');
+        const pauseTimerBtn = document.getElementById('pause-timer');
+        const resetTimerBtn = document.getElementById('reset-timer');
+        const completeMessage = document.getElementById('complete-message');
+        const progressFill = document.getElementById('progress-fill');
+        const taskCards = document.querySelectorAll('.task-card');
+        
+        // Toggle checkbox
+        function toggleCheckbox(element) {
+            element.classList.toggle('checked');
+            
+            // Check if parent task card has data-time attribute
+            const taskCard = element.closest('.task-card');
+            if (taskCard && taskCard.dataset.time && !element.classList.contains('checked')) {
+                startActivity(taskCard.dataset.task, parseInt(taskCard.dataset.time));
+            }
+        }
+        
+        // Format time (minutes:seconds)
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        // Start activity timer
+        function startActivity(activity, minutes) {
+            // Reset any existing timer
+            if (timer) {
+                clearInterval(timer);
+            }
+            
+            // Set current activity
+            currentActivity = activity;
+            totalTime = minutes * 60;
+            timeLeft = totalTime;
+            
+            // Update UI
+            timerContainer.style.display = 'block';
+            completeMessage.style.display = 'none';
+            progressFill.style.width = '0%';
+            
+            // Set activity name
+            switch(activity) {
+                case 'reading':
+                    timerActivityName.textContent = 'Lecture';
+                    break;
+                case 'pomodoro':
+                    timerActivityName.textContent = 'Session de travail';
+                    break;
+                case 'learning':
+                    timerActivityName.textContent = 'Apprentissage';
+                    break;
+                case 'movement':
+                    timerActivityName.textContent = 'Activité physique';
+                    break;
+                default:
+                    timerActivityName.textContent = 'Activité';
+            }
+            
+            // Update timer display
+            timerDisplay.textContent = formatTime(timeLeft);
+            
+            // Show timer container and scroll to it
+            timerContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Start timer
+        function startTimer() {
+            if (!timerRunning && timeLeft > 0) {
+                timerRunning = true;
+                timer = setInterval(() => {
+                    timeLeft--;
+                    timerDisplay.textContent = formatTime(timeLeft);
+                    
+                    // Update progress bar
+                    const progress = ((totalTime - timeLeft) / totalTime) * 100;
+                    progressFill.style.width = `${progress}%`;
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        timerRunning = false;
+                        completeMessage.style.display = 'block';
+                        
+                        // Check the corresponding checkbox
+                        taskCards.forEach(card => {
+                            if (card.dataset.task === currentActivity) {
+                                const checkbox = card.querySelector('.checkbox');
+                                checkbox.classList.add('checked');
+                            }
+                        });
+                    }
+                }, 1000);
+            }
+        }
+        
+        // Pause timer
+        function pauseTimer() {
+            if (timerRunning) {
+                clearInterval(timer);
+                timerRunning = false;
+            }
+        }
+        
+        // Reset timer
+        function resetTimer() {
+            clearInterval(timer);
+            timerRunning = false;
+            timeLeft = totalTime;
+            timerDisplay.textContent = formatTime(timeLeft);
+            progressFill.style.width = '0%';
+            completeMessage.style.display = 'none';
+        }
+        
+        // Event listeners
+        mainButton.addEventListener('click', () => {
+            // Find first unchecked task
+            const firstUnchecked = document.querySelector('.task-card:not(.checked)');
+            if (firstUnchecked) {
+                const taskTime = parseInt(firstUnchecked.dataset.time);
+                startActivity(firstUnchecked.dataset.task, taskTime);
+            }
+        });
+        
+        startTimerBtn.addEventListener('click', startTimer);
+        pauseTimerBtn.addEventListener('click', pauseTimer);
+        resetTimerBtn.addEventListener('click', resetTimer);
+        
+        // Initialize tasks
+        taskCards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Only trigger if not clicking the checkbox
+                if (!e.target.classList.contains('checkbox')) {
+                    const taskTime = parseInt(this.dataset.time);
+                    startActivity(this.dataset.task, taskTime);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
