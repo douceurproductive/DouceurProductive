@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement - Douceur Productive</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-default">
+    <header>
+        <a href="index.html" class="logo">Douceur<span>Productive</span></a>
+    </header>
+    
+    <div class="container">
+        <h1>Choisissez votre méthode de paiement</h1>
+        
+        <div class="payment-options">
+            <button class="payment-option" onclick="selectPayment('card')">
+                <svg><!-- Icône CB --></svg>
+                <span>Carte bancaire</span>
+            </button>
+            
+            <button class="payment-option" onclick="selectPayment('paypal')">
+                <svg><!-- Icône PayPal --></svg>
+                <span>PayPal</span>
+            </button>
+            
+            <!-- Autres méthodes -->
+        </div>
+        
+        <!-- Formulaire qui apparaît selon la méthode choisie -->
+        <div id="payment-form" style="display: none;">
+            <!-- Le contenu changera selon la méthode -->
+        </div>
+    </div>
+    
+    <script>
+        function selectPayment(method) {
+            const formContainer = document.getElementById('payment-form');
+            formContainer.style.display = 'block';
+            
+            // Afficher le formulaire approprié selon la méthode
+            if (method === 'card') {
+                formContainer.innerHTML = `
+                    <h2>Paiement par carte</h2>
+                    <form>
+                        <div class="form-group">
+                            <label>Numéro de carte</label>
+                            <input type="text" placeholder="1234 5678 9012 3456">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Date d'expiration</label>
+                                <input type="text" placeholder="MM/AA">
+                            </div>
+                            <div class="form-group">
+                                <label>CVV</label>
+                                <input type="text" placeholder="123">
+                            </div>
+                        </div>
+                        <button type="submit" class="payment-button">Payer 4,99€/mois</button>
+                    </form>
+                `;
+            } else if (method === 'paypal') {
+                formContainer.innerHTML = `
+                    <h2>Paiement via PayPal</h2>
+                    <p>Vous allez être redirigé vers PayPal pour compléter votre paiement.</p>
+                    <button class="payment-button">Continuer vers PayPal</button>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
