@@ -1,29 +1,3 @@
-// Ajouter au script.js existant
-
-// Définir l'URL de la page de paiement
-const paymentPageUrl = "payment.html"; // À remplacer par votre URL réelle
-
-// Mettre à jour tous les boutons d'upgrade
-document.addEventListener('DOMContentLoaded', function() {
-    // S'assurer que les onglets premium sont bien verrouillés
-    const premiumTabs = document.querySelectorAll('.tab-button[data-tab="history"], .tab-button[data-tab="stats"]');
-    premiumTabs.forEach(tab => {
-        tab.addEventListener('click', function(e) {
-            // Si ce n'est pas déjà fait, afficher la modal de plans
-            plansModal.style.display = 'flex';
-        });
-    });
-
-    // Rediriger les boutons d'abonnement vers la page de paiement
-    const subscribeButtons = document.querySelectorAll('.plan-cta .upgrade-button, #upgrade-from-modal');
-    subscribeButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            // Vous pouvez ajouter des paramètres à l'URL pour indiquer le plan choisi
-            window.location.href = paymentPageUrl;
-        });
-    });
-});
 // Variables
 let currentActivity = null;
 let timer = null;
@@ -64,6 +38,64 @@ let tasks = [
         type: 'movement'
     }
 ];
+
+// Vérifier si l'utilisateur a un abonnement premium
+function isPremiumUser() {
+    return localStorage.getItem('douceurProductivePremium') === 'true';
+}
+
+// Activer le mode premium
+function activatePremium() {
+    localStorage.setItem('douceurProductivePremium', 'true');
+    console.log("Mode Premium activé !");
+}
+
+// Désactiver le mode premium
+function deactivatePremium() {
+    localStorage.removeItem('douceurProductivePremium');
+    console.log("Mode Premium désactivé !");
+}
+
+// Appliquer l'état premium à l'interface
+function applyPremiumStatus() {
+    const isPremium = isPremiumUser();
+    
+    // Débloquer les onglets premium
+    if (isPremium) {
+        // Supprimer les overlays premium
+        document.querySelectorAll('.premium-overlay').forEach(overlay => {
+            overlay.style.display = 'none';
+        });
+        
+        // Rendre les thèmes premium disponibles
+        document.querySelectorAll('.theme-option.premium-feature').forEach(theme => {
+            theme.classList.remove('premium-feature');
+        });
+        
+        // Activer le bouton d'ajout de tâche
+        const addTaskButton = document.getElementById('add-task-button');
+        if (addTaskButton) {
+            addTaskButton.classList.remove('premium-feature');
+        }
+        
+        // Mettre à jour le texte des boutons premium
+        const premiumButtons = document.querySelectorAll('.upgrade-button');
+        premiumButtons.forEach(button => {
+            if (button.textContent.includes('Premium')) {
+                button.textContent = 'Mode Premium actif';
+                button.style.backgroundColor = '#4CAF50'; // Vert
+            }
+        });
+        
+        // Informer l'utilisateur
+        console.log("Interface Premium activée");
+    } else {
+        // Si nécessaire, réactiver les restrictions
+        document.querySelectorAll('.premium-overlay').forEach(overlay => {
+            overlay.style.display = 'flex';
+        });
+    }
+}
 
 // DOM Elements
 const mainButton = document.getElementById('main-button');
@@ -200,6 +232,9 @@ function switchTab(tabId) {
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
+    // Vérifier et appliquer le statut premium dès le chargement
+    applyPremiumStatus();
+    
     // Event listeners pour les onglets
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -240,7 +275,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Event listeners pour le modal d'ajout de tâche (premium)
     addTaskButton.addEventListener('click', function() {
-        addTaskModal.style.display = 'flex';
+        if (isPremiumUser()) {
+            // Si premium, permettre l'ajout de tâches
+            // Code ici pour ouvrir le modal d'ajout de tâches réel
+            alert("Cette fonctionnalité sera disponible prochainement.");
+        } else {
+            // Sinon afficher le modal d'upgrade
+            addTaskModal.style.display = 'flex';
+        }
     });
     
     closeModalButton.addEventListener('click', function() {
@@ -250,7 +292,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event listeners pour le modal des plans
     showPlansButton.addEventListener('click', function(e) {
         e.preventDefault();
-        plansModal.style.display = 'flex';
+        
+        if (isPremiumUser()) {
+            // Si déjà premium, informer l'utilisateur
+            alert("Vous êtes déjà abonné au forfait Premium !");
+        } else {
+            plansModal.style.display = 'flex';
+        }
     });
     
     closePlansModalButton.addEventListener('click', function() {
@@ -261,7 +309,9 @@ document.addEventListener('DOMContentLoaded', function() {
     upgradePremiumButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
-            plansModal.style.display = 'flex';
+            if (!isPremiumUser()) {
+                plansModal.style.display = 'flex';
+            }
         });
     });
     
@@ -277,7 +327,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Empêcher l'utilisation des fonctionnalités premium
     themeOptions.forEach(option => {
-        if (option.classList.contains('premium-feature')) {
+        if (option.classList.contains('premium-feature') && !isPremiumUser()) {
             option.addEventListener('click', function(e) {
                 e.preventDefault();
                 plansModal.style.display = 'flex';
@@ -294,4 +344,44 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+    
+    // Ajouter un bouton pour activer/désactiver le mode premium si on est en développement
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname.includes('github.io')) {
+        // Nous sommes en développement, ajouter le bouton de test
+        const toggleContainer = document.createElement('div');
+        toggleContainer.style.position = 'fixed';
+        toggleContainer.style.bottom = '10px';
+        toggleContainer.style.right = '10px';
+        toggleContainer.style.zIndex = '1000';
+        toggleContainer.style.background = 'rgba(0,0,0,0.7)';
+        toggleContainer.style.padding = '10px';
+        toggleContainer.style.borderRadius = '5px';
+        
+        const toggleButton = document.createElement('button');
+        toggleButton.textContent = isPremiumUser() ? 'Désactiver Premium' : 'Activer Premium';
+        toggleButton.style.padding = '5px 10px';
+        toggleButton.style.cursor = 'pointer';
+        toggleButton.style.background = isPremiumUser() ? '#f44336' : '#4CAF50';
+        toggleButton.style.color = 'white';
+        toggleButton.style.border = 'none';
+        toggleButton.style.borderRadius = '3px';
+        
+        toggleButton.addEventListener('click', function() {
+            if (isPremiumUser()) {
+                deactivatePremium();
+                this.textContent = 'Activer Premium';
+                this.style.background = '#4CAF50';
+            } else {
+                activatePremium();
+                this.textContent = 'Désactiver Premium';
+                this.style.background = '#f44336';
+            }
+            
+            // Rafraîchir la page pour appliquer les changements
+            window.location.reload();
+        });
+        
+        toggleContainer.appendChild(toggleButton);
+        document.body.appendChild(toggleContainer);
+    }
 });
