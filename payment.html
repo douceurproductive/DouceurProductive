@@ -809,5 +809,33 @@
             }, 1000);
         });
     </script>
+    <!-- Ajoutez cela avant la fermeture de la balise body dans payment.html -->
+
+<div style="text-align: center; margin-top: 2rem; padding: 1rem; background-color: #f5f5f5; border-radius: 0.5rem;">
+    <p style="margin-bottom: 1rem; color: #666;">Vous êtes en mode démo. Vous pouvez tester les fonctionnalités premium sans paiement réel.</p>
+    <button id="test-premium-button" style="background-color: #4CAF50; color: white; border: none; border-radius: 0.5rem; padding: 0.8rem 1.5rem; font-weight: 600; cursor: pointer;">
+        Tester le mode Premium
+    </button>
+</div>
+
+<script>
+    // Fonction pour activer le mode premium de test
+    function activatePremium() {
+        localStorage.setItem('douceurProductivePremium', 'true');
+        alert('Mode Premium activé ! Vous allez être redirigé vers l\'application.');
+        setTimeout(() => {
+            window.location.href = 'app.html';
+        }, 1000);
+    }
+    
+    // Ajouter l'écouteur d'événement au bouton de test
+    document.getElementById('test-premium-button').addEventListener('click', activatePremium);
+    
+    // Ajouter aussi l'écouteur aux boutons de paiement
+    document.querySelector('.payment-button').addEventListener('click', function(e) {
+        e.preventDefault(); // Empêcher le comportement par défaut
+        activatePremium();
+    });
+</script>
 </body>
 </html>
