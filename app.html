@@ -1,691 +1,4 @@
-flex-direction: column;
-                text-align: center;
-                gap: 0.8rem;
-                padding: 1.5rem 1rem;
-            }
-            
-            .icon-container {
-                margin-bottom: 0.5rem;
-            }
-            
-            .checkbox {
-                margin-top: 0.8rem;
-            }
-            
-            .timer-controls {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            
-            .control-button {
-                width: 100%;
-            }
-            
-            .tab-button {
-                font-size: 0.8rem;
-                padding: 0.8rem 0.5rem;
-            }
-        }
-    </style>
-</head>
-<body class="theme-default">
-    <header>
-        <a href="index.html" class="logo">Douceur<span>Productive</span></a>
-        <a href="#" class="upgrade-button" id="show-plans-button">Passer au Premium</a>
-    </header>
-    
-    <div class="container">
-        <a href="index.html" class="back-link">← Retour à l'accueil</a>
-        
-        <div class="app-header">
-            <div class="add-task-button premium-feature" id="add-task-button">+</div>
-            <h1>Aujourd'hui,</h1>
-            <h2>ta mission est...</h2>
-        </div>
-        
-        <div class="tab-navigation">
-            <button class="tab-button active" data-tab="tasks">Tâches</button>
-            <button class="tab-button" data-tab="history">Historique</button>
-            <button class="tab-button" data-tab="stats">Statistiques</button>
-            <button class="tab-button" data-tab="settings">Paramètres</button>
-        </div>
-        
-        <div id="tasks" class="tab-content active">
-            <div class="task-list" id="task-list">
-                <div class="task-card" data-task="reading" data-time="10" data-id="task-1">
-                    <div class="icon-container">
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M6 22h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2zm0-2V4h12v16H6zm6-13a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-                        </svg>
-                    </div>
-                    <div class="task-info">
-                        <h3 class="task-title">10 min de lecture</h3>
-                        <p class="task-desc">Prends un moment pour lire et te détendre</p>
-                        <div class="task-duration">
-                            Durée: <input type="number" min="1" max="60" value="10"> min
-                        </div>
-                    </div>
-                    <div class="checkbox" onclick="toggleCheckbox(this)"></div>
-                </div>
-                
-                <div class="task-card" data-task="pomodoro" data-time="25" data-id="task-2">
-                    <div class="icon-container">
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
-                            <path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z"/>
-                        </svg>
-                    </div>
-                    <div class="task-info">
-                        <h3 class="task-title">1 session de travail de 25 min</h3>
-                        <p class="task-desc">Concentre-toi sur une tâche importante</p>
-                        <div class="task-duration">
-                            Durée: <input type="number" min="1" max="60" value="25"> min
-                        </div>
-                    </div>
-                    <div class="checkbox" onclick="toggleCheckbox(this)"></div>
-                </div>
-                
-                <div class="task-card" data-task="learning" data-time="15" data-id="task-3">
-                    <div class="icon-container">
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
-                            <path d="M11 11h2v6h-2zm0-4h2v2h-2z"/>
-                        </svg>
-                    </div>
-                    <div class="task-info">
-                        <h3 class="task-title">Révision ou apprentissage</h3>
-                        <p class="task-desc">Apprends une nouvelle chose aujourd'hui</p>
-                        <div class="task-duration">
-                            Durée: <input type="number" min="1" max="60" value="15"> min
-                        </div>
-                    </div>
-                    <div class="checkbox" onclick="toggleCheckbox(this)"></div>
-                </div>
-                
-                <div class="task-card" data-task="movement" data-time="15" data-id="task-4">
-                    <div class="icon-container">
-                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z"/>
-                        </svg>
-                    </div>
-                    <div class="task-info">
-                        <h3 class="task-title">15 min de marche ou d'étirement</h3>
-                        <p class="task-desc">Prends soin de ton corps</p>
-                        <div class="task-duration">
-                            Durée: <input type="number" min="1" max="60" value="15"> min
-                        </div>
-                    </div>
-                    <div class="checkbox" onclick="toggleCheckbox(this)"></div>
-                </div>
-            </div>
-            
-            <div class="timer-container" id="timer-container">
-                <h3 id="timer-activity">Lecture</h3>
-                <div class="progress-container">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progress-fill"></div>
-                    </div>
-                </div>
-                <div class="timer" id="timer">10:00</div>
-                <div class="timer-controls">
-                    <button class="control-button" id="start-timer">Démarrer</button>
-                    <button class="control-button" id="pause-timer">Pause</button>
-                    <button class="control-button" id="reset-timer">Réinitialiser</button>
-                </div>
-                <div class="task-complete-message" id="complete-message">
-                    Bravo ! Activité terminée ! 👏
-                </div>
-            </div>
-            
-            <button class="start-button" id="main-button">C'est parti !</button>
-            
-            <p class="motivation-text">Commence, même si c'est pas parfait.</p>
-        </div>
-        
-        <div id="history" class="tab-content premium-feature">
-            <div class="premium-overlay">
-                <p class="premium-text">Cette fonctionnalité est disponible dans la version Premium</p>
-                <a href="#" class="upgrade-button" id="upgrade-history">Découvrir Premium</a>
-            </div>
-            <div class="premium-badge">Premium</div>
-            <div class="history-container">
-                <div class="history-date">Aujourd'hui</div>
-                <div id="history-list">
-                    <div class="history-item">
-                        <div class="history-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M6 22h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2zm0-2V4h12v16H6zm6-13a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-                            </svg>
-                        </div>
-                        <div class="history-info">
-                            <div class="history-task">10 min de lecture</div>
-                            <div class="history-time">09:15 - 10 min</div>
-                        </div>
-                    </div>
-                    <div class="history-item">
-                        <div class="history-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
-                                <path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z"/>
-                            </svg>
-                        </div>
-                        <div class="history-info">
-                            <div class="history-task">1 session de travail de 25 min</div>
-                            <div class="history-time">10:30 - 25 min</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div id="stats" class="tab-content premium-feature">
-            <div class="premium-overlay">
-                <p class="premium-text">Suivez votre progression et atteignez vos objectifs avec la version Premium</p>
-                <a href="#" class="upgrade-button" id="upgrade-stats">Accéder aux statistiques</a>
-            </div>
-            <div class="premium-badge">Premium</div>
-            <div class="stats-container">
-                <div class="stat-card">
-                    <div class="stat-value">12</div>
-                    <div class="stat-label">Tâches complétées</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">215</div>
-                    <div class="stat-label">Minutes actives</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">5</div>
-                    <div class="stat-label">Jours consécutifs</div>
-                </div>
-            </div>
-            
-            <div class="objectives-container">
-                <h3 class="settings-title">Vos objectifs</h3>
-                <div class="objective-item">
-                    <div class="objective-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M6 22h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2zm0-2V4h12v16H6zm6-13a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-                        </svg>
-                    </div>
-                    <div class="objective-info">
-                        <div class="objective-title">Lire 30 minutes par jour</div>
-                        <div class="objective-progress">
-                            <div class="objective-bar" style="width: 33%;"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="objective-item">
-                    <div class="objective-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
-                            <path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z"/>
-                        </svg>
-                    </div>
-                    <div class="objective-info">
-                        <div class="objective-title">Maintenir 7 jours consécutifs</div>
-                        <div class="objective-progress">
-                            <div class="objective-bar" style="width: 70%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <div class="chart-title">Activités par semaine</div>
-                <div class="chart-placeholder">Graphiques détaillés de votre activité disponibles en Premium</div>
-            </div>
-        </div>
-        
-        <div id="settings" class="tab-content">
-            <div class="settings-section">
-                <div class="settings-title">Thème visuel</div>
-                <div class="theme-selector">
-                    <div class="theme-option active" data-theme="default">
-                        <div class="theme-default-preview"></div>
-                    </div>
-                    <div class="theme-option premium-feature" data-theme="night">
-                        <div class="theme-night-preview"></div>
-                    </div>
-                    <div class="theme-option premium-feature" data-theme="forest">
-                        <div class="theme-forest-preview"></div>
-                    </div>
-                    <div class="theme-option premium-feature" data-theme="ocean">
-                        <div class="theme-ocean-preview"></div>
-                    </div>
-                </div>
-                <p class="settings-hint">Les thèmes supplémentaires sont disponibles avec Premium</p>
-            </div>
-            
-            <div class="settings-section premium-feature">
-                <div class="premium-overlay">
-                    <p class="premium-text">Recevez des rappels et notifications en version Premium</p>
-                    <a href="#" class="upgrade-button">Activer</a>
-                </div>
-                <div class="premium-badge">Premium</div>
-                <div class="settings-title">Notifications</div>
-                <div class="notification-setting">
-                    <div>Activer les notifications</div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="notifications-toggle">
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-                <div class="notification-setting">
-                    <div>Rappel en fin d'activité</div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="reminder-toggle">
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-            </div>
-            
-            <div class="settings-section premium-feature">
-                <div class="premium-overlay">
-                    <p class="premium-text">Créez vos propres routines personnalisées</p>
-                    <a href="#" class="upgrade-button">Débloquer</a>
-                </div>
-                <div class="premium-badge">Premium</div>
-                <div class="settings-title">Routines personnalisées</div>
-                <div class="routines-grid">
-                    <div class="routine-card">
-                        <div class="routine-title">Matinée productive</div>
-                        <div class="routine-description">Démarrez la journée du bon pied</div>
-                        <div class="routine-tasks">4 tâches • 60 min</div>
-                    </div>
-                    <div class="routine-card">
-                        <div class="routine-title">Pause bien-être</div>
-                        <div class="routine-description">Recharger vos batteries</div>
-                        <div class="routine-tasks">3 tâches • 45 min</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="settings-section premium-feature">
-                <div class="premium-overlay">
-                    <p class="premium-text">Fonctionnalité d'équipe disponible en version Teams</p>
-                    <a href="#" class="upgrade-button">Passer à Teams</a>
-                </div>
-                <div class="premium-badge teams-badge">Teams</div>
-                <div class="settings-title">Gestion d'équipe</div>
-                <div class="team-grid">
-                    <div class="member-card">
-                        <div class="member-name">Marie Dubois</div>
-                        <div class="member-role">Chef de projet</div>
-                        <div class="member-progress">12 tâches aujourd'hui • 85% complété</div>
-                    </div>
-                    <div class="member-card">
-                        <div class="member-name">Thomas Martin</div>
-                        <div class="member-role">Développeur</div>
-                        <div class="member-progress">8 tâches aujourd'hui • 50% complété</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Modal d'ajout de tâche personnalisée -->
-    <div class="modal" id="add-task-modal">
-        <div class="modal-content">
-            <button class="close-modal" id="close-modal">&times;</button>
-            <h3 class="modal-title">Fonctionnalité Premium</h3>
-            <div class="upgrade-info">
-                <div class="upgrade-info-title">Personnalisez vos tâches</div>
-                <p class="upgrade-info-text">Créez des tâches adaptées à vos besoins, définissez vos propres activités et construisez votre routine idéale.</p>
-                <a href="#" class="upgrade-button" id="upgrade-from-modal">Passer au Premium</a>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Modal des plans d'abonnement -->
-    <div class="modal" id="plans-modal">
-        <div class="modal-content" style="max-width: 800px;">
-            <button class="close-modal" id="close-plans-modal">&times;</button>
-            <h3 class="modal-title">Choisissez votre plan</h3>
-            
-            <div class="plans-section">
-                <div class="plan-card">
-                    <div class="plan-header">
-                        <h3 class="plan-name">Gratuit</h3>
-                        <div class="plan-price">0€</div>
-                        <div class="plan-billing">pour toujours</div>
-                        <div class="current-plan">Plan actuel</div>
-                    </div>
-                    <div class="plan-features">
-                        <ul class="plan-feature-list">
-                            <li><span class="feature-check">✓</span> 4 tâches quotidiennes de base</li>
-                            <li><span class="feature-check">✓</span> Minuteur intégré</li>
-                            <li><span class="feature-check">✓</span> Modification des durées</li>
-                            <li><span class="feature-check">✓</span> Thème par défaut</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="plan-card">
-                    <div class="plan-header">
-                        <h3 class="plan-name">Premium</h3>
-                        <div class="plan-price">4.99€</div>
-                        <div class="plan-billing">par mois</div>
-                    </div>
-                    <div class="plan-features">
-                        <ul class="plan-feature-list">
-                            <li><span class="feature-check">✓</span> Tout ce qui est inclus en gratuit</li>
-                            <li><span class="feature-check">✓</span> Tâches personnalisées illimitées</li>
-                            <li><span class="feature-check">✓</span> Historique détaillé</li>
-                            <li><span class="feature-check">✓</span> Statistiques et objectifs</li>
-                            <li><span class="feature-check">✓</span> Routines prédéfinies</li>
-                            <li><span class="feature-check">✓</span> 3 thèmes supplémentaires</li>
-                            <li><span class="feature-check">✓</span> Notifications et rappels</li>
-                        </ul>
-                    </div>
-                    <div class="plan-cta">
-                        <a href="#" class="upgrade-button">S'abonner</a>
-                    </div>
-                </div>
-                
-                <div class="plan-card">
-                    <div class="plan-header">
-                        <h3 class="plan-name">Teams</h3>
-                        <div class="plan-price">12.99€</div>
-                        <div class="plan-billing">par utilisateur/mois</div>
-                    </div>
-                    <div class="plan-features">
-                        <ul class="plan-feature-list">
-                            <li><span class="feature-check">✓</span> Tout ce qui est inclus en Premium</li>
-                            <li><span class="feature-check">✓</span> Gestion d'équipe</li>
-                            <li><span class="feature-check">✓</span> Tableau de bord collaboratif</li>
-                            <li><span class="feature-check">✓</span> Objectifs partagés</li>
-                            <li><span class="feature-check">✓</span> Routines d'équipe</li>
-                            <li><span class="feature-check">✓</span> Statistiques d'équipe</li>
-                            <li><span class="feature-check">✓</span> Support prioritaire</li>
-                        </ul>
-                    </div>
-                    <div class="plan-cta">
-                        <a href="#" class="upgrade-button">Contacter</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <footer>
-        &copy; 2025 Douceur Productive. Tous droits réservés.
-    </footer>
-    
-    <script>
-        // Variables
-        let currentActivity = null;
-        let timer = null;
-        let timerRunning = false;
-        let timeLeft = 0;
-        let totalTime = 0;
-        let tasks = [
-            {
-                id: 'task-1',
-                name: '10 min de lecture',
-                description: 'Prends un moment pour lire et te détendre',
-                duration: 10,
-                icon: 'book',
-                type: 'reading'
-            },
-            {
-                id: 'task-2',
-                name: '1 session de travail de 25 min',
-                description: 'Concentre-toi sur une tâche importante',
-                duration: 25,
-                icon: 'clock',
-                type: 'pomodoro'
-            },
-            {
-                id: 'task-3',
-                name: 'Révision ou apprentissage',
-                description: 'Apprends une nouvelle chose aujourd\'hui',
-                duration: 15,
-                icon: 'info',
-                type: 'learning'
-            },
-            {
-                id: 'task-4',
-                name: '15 min de marche ou d\'étirement',
-                description: 'Prends soin de ton corps',
-                duration: 15,
-                icon: 'eye',
-                type: 'movement'
-            }
-        ];
-        
-        // DOM Elements
-        const mainButton = document.getElementById('main-button');
-        const timerContainer = document.getElementById('timer-container');
-        const timerDisplay = document.getElementById('timer');
-        const timerActivityName = document.getElementById('timer-activity');
-        const startTimerBtn = document.getElementById('start-timer');
-        const pauseTimerBtn = document.getElementById('pause-timer');
-        const resetTimerBtn = document.getElementById('reset-timer');
-        const completeMessage = document.getElementById('complete-message');
-        const progressFill = document.getElementById('progress-fill');
-        const taskCards = document.querySelectorAll('.task-card');
-        const tabButtons = document.querySelectorAll('.tab-button');
-        const tabContents = document.querySelectorAll('.tab-content');
-        const themeOptions = document.querySelectorAll('.theme-option');
-        const addTaskButton = document.getElementById('add-task-button');
-        const addTaskModal = document.getElementById('add-task-modal');
-        const closeModalButton = document.getElementById('close-modal');
-        const showPlansButton = document.getElementById('show-plans-button');
-        const plansModal = document.getElementById('plans-modal');
-        const closePlansModalButton = document.getElementById('close-plans-modal');
-        const upgradePremiumButtons = document.querySelectorAll('.upgrade-button');
-        const taskDurationInputs = document.querySelectorAll('.task-duration input');
-        
-        // Toggle checkbox
-        function toggleCheckbox(element) {
-            element.classList.toggle('checked');
-            
-            // Check if parent task card has data-time attribute
-            const taskCard = element.closest('.task-card');
-            if (taskCard && !element.classList.contains('checked')) {
-                const taskId = taskCard.dataset.id;
-                const task = tasks.find(t => t.id === taskId);
-                if (task) {
-                    startActivity(task);
-                }
-            }
-        }
-        
-        // Format time (minutes:seconds)
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = seconds % 60;
-            return `${mins}:${secs.toString().padStart(2, '0')}`;
-        }
-        
-        // Start activity timer
-        function startActivity(task) {
-            // Reset any existing timer
-            if (timer) {
-                clearInterval(timer);
-            }
-            
-            // Set current activity
-            currentActivity = task;
-            totalTime = task.duration * 60;
-            timeLeft = totalTime;
-            
-            // Update UI
-            timerContainer.style.display = 'block';
-            completeMessage.style.display = 'none';
-            progressFill.style.width = '0%';
-            
-            // Set activity name
-            timerActivityName.textContent = task.name;
-            
-            // Update timer display
-            timerDisplay.textContent = formatTime(timeLeft);
-            
-            // Show timer container and scroll to it
-            timerContainer.scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        // Start timer
-        function startTimer() {
-            if (!timerRunning && timeLeft > 0) {
-                timerRunning = true;
-                timer = setInterval(() => {
-                    timeLeft--;
-                    timerDisplay.textContent = formatTime(timeLeft);
-                    
-                    // Update progress bar
-                    const progress = ((totalTime - timeLeft) / totalTime) * 100;
-                    progressFill.style.width = `${progress}%`;
-                    
-                    if (timeLeft <= 0) {
-                        clearInterval(timer);
-                        timerRunning = false;
-                        completeMessage.style.display = 'block';
-                        
-                        // Check the corresponding checkbox
-                        document.querySelectorAll('.task-card').forEach(card => {
-                            if (card.dataset.id === currentActivity.id) {
-                                const checkbox = card.querySelector('.checkbox');
-                                checkbox.classList.add('checked');
-                            }
-                        });
-                    }
-                }, 1000);
-            }
-        }
-        
-        // Pause timer
-        function pauseTimer() {
-            if (timerRunning) {
-                clearInterval(timer);
-                timerRunning = false;
-            }
-        }
-        
-        // Reset timer
-        function resetTimer() {
-            clearInterval(timer);
-            timerRunning = false;
-            timeLeft = totalTime;
-            timerDisplay.textContent = formatTime(timeLeft);
-            progressFill.style.width = '0%';
-            completeMessage.style.display = 'none';
-        }
-        
-        // Gérer les tabs
-        function switchTab(tabId) {
-            tabContents.forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            tabButtons.forEach(button => {
-                button.classList.remove('active');
-            });
-            
-            document.getElementById(tabId).classList.add('active');
-            document.querySelector(`.tab-button[data-tab="${tabId}"]`).classList.add('active');
-        }
-        
-        // Event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            // Event listeners pour les onglets
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    switchTab(this.dataset.tab);
-                });
-            });
-            
-            // Event listeners pour les durées des tâches
-            taskDurationInputs.forEach(input => {
-                input.addEventListener('change', function() {
-                    const taskCard = this.closest('.task-card');
-                    const taskId = taskCard.dataset.id;
-                    const taskIndex = tasks.findIndex(t => t.id === taskId);
-                    if (taskIndex !== -1) {
-                        tasks[taskIndex].duration = parseInt(this.value);
-                        taskCard.dataset.time = this.value;
-                    }
-                });
-            });
-            
-            // Event listener pour le bouton principal
-            mainButton.addEventListener('click', () => {
-                // Trouver la première tâche non cochée
-                const firstUnchecked = document.querySelector('.task-card:not(.checked)');
-                if (firstUnchecked) {
-                    const taskId = firstUnchecked.dataset.id;
-                    const task = tasks.find(t => t.id === taskId);
-                    if (task) {
-                        startActivity(task);
-                    }
-                }
-            });
-            
-            // Event listeners pour le minuteur
-            startTimerBtn.addEventListener('click', startTimer);
-            pauseTimerBtn.addEventListener('click', pauseTimer);
-            resetTimerBtn.addEventListener('click', resetTimer);
-            
-            // Event listeners pour le modal d'ajout de tâche (premium)
-            addTaskButton.addEventListener('click', function() {
-                addTaskModal.style.display = 'flex';
-            });
-            
-            closeModalButton.addEventListener('click', function() {
-                addTaskModal.style.display = 'none';
-            });
-            
-            // Event listeners pour le modal des plans
-            showPlansButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                plansModal.style.display = 'flex';
-            });
-            
-            closePlansModalButton.addEventListener('click', function() {
-                plansModal.style.display = 'none';
-            });
-            
-            // Event listeners pour les boutons d'upgrade
-            upgradePremiumButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    plansModal.style.display = 'flex';
-                });
-            });
-            
-            // Fermer les modals en cliquant à l'extérieur
-            window.addEventListener('click', function(e) {
-                if (e.target === addTaskModal) {
-                    addTaskModal.style.display = 'none';
-                }
-                if (e.target === plansModal) {
-                    plansModal.style.display = 'none';
-                }
-            });
-            
-            // Empêcher l'utilisation des fonctionnalités premium
-            themeOptions.forEach(option => {
-                if (option.classList.contains('premium-feature')) {
-                    option.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        plansModal.style.display = 'flex';
-                    });
-                } else {
-                    option.addEventListener('click', function() {
-                        document.body.className = '';
-                        document.body.classList.add(`theme-${this.dataset.theme}`);
-                        
-                        themeOptions.forEach(opt => {
-                            opt.classList.remove('active');
-                        });
-                        this.classList.add('active');
-                    });
-                }
-            });
-        });
-    </script>
-</body>
-</html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -1135,324 +448,6 @@ flex-direction: column;
             background: #6366f1;
         }
         
-        /* History tab */
-        .history-container {
-            background: var(--card-bg);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 8px 15px var(--shadow);
-            margin-bottom: 2rem;
-            transition: background 0.5s;
-        }
-        
-        .history-date {
-            font-weight: 600;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        
-        .history-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .history-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--accent-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        
-        .history-icon svg {
-            width: 24px;
-            height: 24px;
-            fill: white;
-        }
-        
-        .history-info {
-            flex: 1;
-        }
-        
-        .history-task {
-            font-weight: 600;
-        }
-        
-        .history-time {
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
-        
-        .history-empty {
-            text-align: center;
-            padding: 2rem;
-            opacity: 0.7;
-        }
-        
-        /* Settings tab */
-        .settings-section {
-            background: var(--card-bg);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 8px 15px var(--shadow);
-            margin-bottom: 1.5rem;
-            transition: background 0.5s;
-        }
-        
-        .settings-title {
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        
-        .theme-selector {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-        }
-        
-        .theme-option {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: transform 0.2s;
-            border: 2px solid transparent;
-            overflow: hidden;
-        }
-        
-        .theme-option:hover {
-            transform: scale(1.1);
-        }
-        
-        .theme-option.active {
-            border-color: var(--highlight);
-        }
-        
-        .theme-default-preview {
-            background: linear-gradient(135deg, #f8e1e7 0%, #e6f0f9 100%);
-            width: 100%;
-            height: 100%;
-        }
-        
-        .theme-night-preview {
-            background: linear-gradient(135deg, #2a2a3a 0%, #1f2933 100%);
-            width: 100%;
-            height: 100%;
-        }
-        
-        .theme-forest-preview {
-            background: linear-gradient(135deg, #1e3a25 0%, #294838 100%);
-            width: 100%;
-            height: 100%;
-        }
-        
-        .theme-ocean-preview {
-            background: linear-gradient(135deg, #0e3d5a 0%, #143a6a 100%);
-            width: 100%;
-            height: 100%;
-        }
-        
-        .notification-setting {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-        
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 52px;
-            height: 26px;
-        }
-        
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(255, 255, 255, 0.2);
-            transition: 0.4s;
-            border-radius: 30px;
-        }
-        
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: 0.4s;
-            border-radius: 50%;
-        }
-        
-        input:checked + .toggle-slider {
-            background-color: var(--accent-color);
-        }
-        
-        input:checked + .toggle-slider:before {
-            transform: translateX(26px);
-        }
-        
-        /* Custom task form */
-        .custom-task-container {
-            background: var(--card-bg);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 8px 15px var(--shadow);
-            margin-bottom: 1.5rem;
-            transition: background 0.5s;
-        }
-        
-        .custom-task-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        
-        .form-group label {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        
-        .form-group input, .form-group textarea, .form-group select {
-            padding: 0.8rem;
-            border-radius: 0.5rem;
-            border: none;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-color);
-            font-family: var(--font-main);
-        }
-        
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-            outline: 2px solid var(--accent-color);
-        }
-        
-        .submit-button {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            border-radius: 0.5rem;
-            padding: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
-            font-family: var(--font-main);
-        }
-        
-        .submit-button:hover {
-            background: var(--highlight);
-        }
-        
-        /* Stats and charts */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .stat-card {
-            background: var(--card-bg);
-            border-radius: 1rem;
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 0 4px 10px var(--shadow);
-            transition: background 0.5s;
-        }
-        
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--accent-color);
-        }
-        
-        .stat-label {
-            font-size: 0.8rem;
-            opacity: 0.8;
-        }
-        
-        .chart-container {
-            background: var(--card-bg);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 8px 15px var(--shadow);
-            margin-bottom: 1.5rem;
-            height: 250px;
-            transition: background 0.5s;
-            position: relative;
-        }
-        
-        .chart-title {
-            font-weight: 600;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        
-        .chart-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.7;
-            font-style: italic;
-            padding: 0 2rem;
-            text-align: center;
-        }
-        
-        /* Add task button */
-        .add-task-button {
-            background: var(--highlight);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            top: -25px;
-            right: 20px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s;
-        }
-        
-        .add-task-button:hover {
-            transform: scale(1.1);
-        }
-        
         /* Modal */
         .modal {
             display: none;
@@ -1495,41 +490,28 @@ flex-direction: column;
             text-align: center;
         }
         
-        /* Routines & Teams (Premium Features) */
-        .routines-grid, .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .routine-card, .member-card {
-            background: var(--card-bg);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 8px 15px var(--shadow);
-            transition: transform 0.2s, background 0.5s;
+        /* Add task button */
+        .add-task-button {
+            background: var(--highlight);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: -25px;
+            right: 20px;
             cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
         }
         
-        .routine-card:hover, .member-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .routine-title, .member-name {
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-        }
-        
-        .routine-description, .member-role {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 1rem;
-        }
-        
-        .routine-tasks, .member-progress {
-            font-size: 0.8rem;
-            opacity: 0.9;
+        .add-task-button:hover {
+            transform: scale(1.1);
         }
         
         /* Plans comparison */
@@ -1613,66 +595,6 @@ flex-direction: column;
             margin-bottom: 1rem;
         }
         
-        /* Objectives (Premium Feature) */
-        .objectives-container {
-            background: var(--card-bg);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 8px 15px var(--shadow);
-            margin-bottom: 2rem;
-            transition: background 0.5s;
-        }
-        
-        .objective-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.2rem;
-            padding-bottom: 1.2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .objective-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--accent-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        
-        .objective-icon svg {
-            width: 24px;
-            height: 24px;
-            fill: white;
-        }
-        
-        .objective-info {
-            flex: 1;
-        }
-        
-        .objective-title {
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-        }
-        
-        .objective-progress {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        
-        .objective-bar {
-            height: 100%;
-            background: var(--highlight);
-            width: 0%;
-            transition: width 1s;
-        }
-        
         .upgrade-info {
             text-align: center;
             margin: 2rem 0;
@@ -1704,4 +626,559 @@ flex-direction: column;
         
         @media (max-width: 480px) {
             .task-card {
-                flex-direction:
+                flex-direction: column;
+                text-align: center;
+                gap: 0.8rem;
+                padding: 1.5rem 1rem;
+            }
+            
+            .icon-container {
+                margin-bottom: 0.5rem;
+            }
+            
+            .checkbox {
+                margin-top: 0.8rem;
+            }
+            
+            .timer-controls {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .control-button {
+                width: 100%;
+            }
+            
+            .tab-button {
+                font-size: 0.8rem;
+                padding: 0.8rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="theme-default">
+    <header>
+        <a href="index.html" class="logo">Douceur<span>Productive</span></a>
+        <a href="#" class="upgrade-button" id="show-plans-button">Passer au Premium</a>
+    </header>
+    
+    <div class="container">
+        <a href="index.html" class="back-link">← Retour à l'accueil</a>
+        
+        <div class="app-header">
+            <div class="add-task-button premium-feature" id="add-task-button">+</div>
+            <h1>Aujourd'hui,</h1>
+            <h2>ta mission est...</h2>
+        </div>
+        
+        <div class="tab-navigation">
+            <button class="tab-button active" data-tab="tasks">Tâches</button>
+            <button class="tab-button" data-tab="history">Historique</button>
+            <button class="tab-button" data-tab="stats">Statistiques</button>
+            <button class="tab-button" data-tab="settings">Paramètres</button>
+        </div>
+        
+        <div id="tasks" class="tab-content active">
+            <div class="task-list" id="task-list">
+                <div class="task-card" data-task="reading" data-time="10" data-id="task-1">
+                    <div class="icon-container">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M6 22h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2zm0-2V4h12v16H6zm6-13a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                        </svg>
+                    </div>
+                    <div class="task-info">
+                        <h3 class="task-title">10 min de lecture</h3>
+                        <p class="task-desc">Prends un moment pour lire et te détendre</p>
+                        <div class="task-duration">
+                            Durée: <input type="number" min="1" max="60" value="10"> min
+                        </div>
+                    </div>
+                    <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                </div>
+                
+                <div class="task-card" data-task="pomodoro" data-time="25" data-id="task-2">
+                    <div class="icon-container">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+                            <path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z"/>
+                        </svg>
+                    </div>
+                    <div class="task-info">
+                        <h3 class="task-title">1 session de travail de 25 min</h3>
+                        <p class="task-desc">Concentre-toi sur une tâche importante</p>
+                        <div class="task-duration">
+                            Durée: <input type="number" min="1" max="60" value="25"> min
+                        </div>
+                    </div>
+                    <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                </div>
+                
+                <div class="task-card" data-task="learning" data-time="15" data-id="task-3">
+                    <div class="icon-container">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+                            <path d="M11 11h2v6h-2zm0-4h2v2h-2z"/>
+                        </svg>
+                    </div>
+                    <div class="task-info">
+                        <h3 class="task-title">Révision ou apprentissage</h3>
+                        <p class="task-desc">Apprends une nouvelle chose aujourd'hui</p>
+                        <div class="task-duration">
+                            Durée: <input type="number" min="1" max="60" value="15"> min
+                        </div>
+                    </div>
+                    <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                </div>
+                
+                <div class="task-card" data-task="movement" data-time="15" data-id="task-4">
+                    <div class="icon-container">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z"/>
+                        </svg>
+                    </div>
+                    <div class="task-info">
+                        <h3 class="task-title">15 min de marche ou d'étirement</h3>
+                        <p class="task-desc">Prends soin de ton corps</p>
+                        <div class="task-duration">
+                            Durée: <input type="number" min="1" max="60" value="15"> min
+                        </div>
+                    </div>
+                    <div class="checkbox" onclick="toggleCheckbox(this)"></div>
+                </div>
+            </div>
+            
+            <div class="timer-container" id="timer-container">
+                <h3 id="timer-activity">Lecture</h3>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+                <div class="timer" id="timer">10:00</div>
+                <div class="timer-controls">
+                    <button class="control-button" id="start-timer">Démarrer</button>
+                    <button class="control-button" id="pause-timer">Pause</button>
+                    <button class="control-button" id="reset-timer">Réinitialiser</button>
+                </div>
+                <div class="task-complete-message" id="complete-message">
+                    Bravo ! Activité terminée ! 👏
+                </div>
+            </div>
+            
+            <button class="start-button" id="main-button">C'est parti !</button>
+            
+            <p class="motivation-text">Commence, même si c'est pas parfait.</p>
+        </div>
+        
+        <div id="history" class="tab-content premium-feature">
+            <div class="premium-overlay">
+                <p class="premium-text">Cette fonctionnalité est disponible dans la version Premium</p>
+                <a href="#" class="upgrade-button" id="upgrade-history">Découvrir Premium</a>
+            </div>
+            <div class="premium-badge">Premium</div>
+            <!-- Contenu de l'historique (caché derrière l'overlay) -->
+        </div>
+        
+        <div id="stats" class="tab-content premium-feature">
+            <div class="premium-overlay">
+                <p class="premium-text">Suivez votre progression et atteignez vos objectifs avec la version Premium</p>
+                <a href="#" class="upgrade-button" id="upgrade-stats">Accéder aux statistiques</a>
+            </div>
+            <div class="premium-badge">Premium</div>
+            <!-- Contenu des statistiques (caché derrière l'overlay) -->
+        </div>
+        
+        <div id="settings" class="tab-content">
+            <div class="settings-section">
+                <div class="settings-title">Thème visuel</div>
+                <div class="theme-selector">
+                    <div class="theme-option active" data-theme="default">
+                        <div class="theme-default-preview"></div>
+                    </div>
+                    <div class="theme-option premium-feature" data-theme="night">
+                        <div class="theme-night-preview"></div>
+                    </div>
+                    <div class="theme-option premium-feature" data-theme="forest">
+                        <div class="theme-forest-preview"></div>
+                    </div>
+                    <div class="theme-option premium-feature" data-theme="ocean">
+                        <div class="theme-ocean-preview"></div>
+                    </div>
+                </div>
+                <p>Les thèmes supplémentaires sont disponibles avec Premium</p>
+            </div>
+            
+            <div class="settings-section premium-feature">
+                <div class="premium-overlay">
+                    <p class="premium-text">Recevez des rappels et notifications en version Premium</p>
+                    <a href="#" class="upgrade-button">Activer</a>
+                </div>
+                <div class="premium-badge">Premium</div>
+                <!-- Contenu des notifications (caché derrière l'overlay) -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal d'ajout de tâche personnalisée -->
+    <div class="modal" id="add-task-modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <button class="close-modal" id="close-plans-modal">&times;</button>
+            <h3 class="modal-title">Choisissez votre plan</h3>
+            
+            <div class="plans-section">
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <h3 class="plan-name">Gratuit</h3>
+                        <div class="plan-price">0€</div>
+                        <div class="plan-billing">pour toujours</div>
+                        <div class="current-plan">Plan actuel</div>
+                    </div>
+                    <div class="plan-features">
+                        <ul class="plan-feature-list">
+                            <li><span class="feature-check">✓</span> 4 tâches quotidiennes de base</li>
+                            <li><span class="feature-check">✓</span> Minuteur intégré</li>
+                            <li><span class="feature-check">✓</span> Modification des durées</li>
+                            <li><span class="feature-check">✓</span> Thème par défaut</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <h3 class="plan-name">Premium</h3>
+                        <div class="plan-price">4.99€</div>
+                        <div class="plan-billing">par mois</div>
+                    </div>
+                    <div class="plan-features">
+                        <ul class="plan-feature-list">
+                            <li><span class="feature-check">✓</span> Tout ce qui est inclus en gratuit</li>
+                            <li><span class="feature-check">✓</span> Tâches personnalisées illimitées</li>
+                            <li><span class="feature-check">✓</span> Historique détaillé</li>
+                            <li><span class="feature-check">✓</span> Statistiques et objectifs</li>
+                            <li><span class="feature-check">✓</span> Routines prédéfinies</li>
+                            <li><span class="feature-check">✓</span> 3 thèmes supplémentaires</li>
+                            <li><span class="feature-check">✓</span> Notifications et rappels</li>
+                        </ul>
+                    </div>
+                    <div class="plan-cta">
+                        <a href="#" class="upgrade-button">S'abonner</a>
+                    </div>
+                </div>
+                
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <h3 class="plan-name">Teams</h3>
+                        <div class="plan-price">12.99€</div>
+                        <div class="plan-billing">par utilisateur/mois</div>
+                    </div>
+                    <div class="plan-features">
+                        <ul class="plan-feature-list">
+                            <li><span class="feature-check">✓</span> Tout ce qui est inclus en Premium</li>
+                            <li><span class="feature-check">✓</span> Gestion d'équipe</li>
+                            <li><span class="feature-check">✓</span> Tableau de bord collaboratif</li>
+                            <li><span class="feature-check">✓</span> Objectifs partagés</li>
+                            <li><span class="feature-check">✓</span> Routines d'équipe</li>
+                            <li><span class="feature-check">✓</span> Statistiques d'équipe</li>
+                            <li><span class="feature-check">✓</span> Support prioritaire</li>
+                        </ul>
+                    </div>
+                    <div class="plan-cta">
+                        <a href="#" class="upgrade-button">Contacter</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        &copy; 2025 Douceur Productive. Tous droits réservés.
+    </footer>
+    
+    <script>
+        // Variables
+        let currentActivity = null;
+        let timer = null;
+        let timerRunning = false;
+        let timeLeft = 0;
+        let totalTime = 0;
+        let tasks = [
+            {
+                id: 'task-1',
+                name: '10 min de lecture',
+                description: 'Prends un moment pour lire et te détendre',
+                duration: 10,
+                icon: 'book',
+                type: 'reading'
+            },
+            {
+                id: 'task-2',
+                name: '1 session de travail de 25 min',
+                description: 'Concentre-toi sur une tâche importante',
+                duration: 25,
+                icon: 'clock',
+                type: 'pomodoro'
+            },
+            {
+                id: 'task-3',
+                name: 'Révision ou apprentissage',
+                description: 'Apprends une nouvelle chose aujourd\'hui',
+                duration: 15,
+                icon: 'info',
+                type: 'learning'
+            },
+            {
+                id: 'task-4',
+                name: '15 min de marche ou d\'étirement',
+                description: 'Prends soin de ton corps',
+                duration: 15,
+                icon: 'eye',
+                type: 'movement'
+            }
+        ];
+        
+        // DOM Elements
+        const mainButton = document.getElementById('main-button');
+        const timerContainer = document.getElementById('timer-container');
+        const timerDisplay = document.getElementById('timer');
+        const timerActivityName = document.getElementById('timer-activity');
+        const startTimerBtn = document.getElementById('start-timer');
+        const pauseTimerBtn = document.getElementById('pause-timer');
+        const resetTimerBtn = document.getElementById('reset-timer');
+        const completeMessage = document.getElementById('complete-message');
+        const progressFill = document.getElementById('progress-fill');
+        const taskCards = document.querySelectorAll('.task-card');
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const themeOptions = document.querySelectorAll('.theme-option');
+        const addTaskButton = document.getElementById('add-task-button');
+        const addTaskModal = document.getElementById('add-task-modal');
+        const closeModalButton = document.getElementById('close-modal');
+        const showPlansButton = document.getElementById('show-plans-button');
+        const plansModal = document.getElementById('plans-modal');
+        const closePlansModalButton = document.getElementById('close-plans-modal');
+        const upgradePremiumButtons = document.querySelectorAll('.upgrade-button');
+        const taskDurationInputs = document.querySelectorAll('.task-duration input');
+        
+        // Toggle checkbox
+        function toggleCheckbox(element) {
+            element.classList.toggle('checked');
+            
+            // Check if parent task card has data-time attribute
+            const taskCard = element.closest('.task-card');
+            if (taskCard && !element.classList.contains('checked')) {
+                const taskId = taskCard.dataset.id;
+                const task = tasks.find(t => t.id === taskId);
+                if (task) {
+                    startActivity(task);
+                }
+            }
+        }
+        
+        // Format time (minutes:seconds)
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        // Start activity timer
+        function startActivity(task) {
+            // Reset any existing timer
+            if (timer) {
+                clearInterval(timer);
+            }
+            
+            // Set current activity
+            currentActivity = task;
+            totalTime = task.duration * 60;
+            timeLeft = totalTime;
+            
+            // Update UI
+            timerContainer.style.display = 'block';
+            completeMessage.style.display = 'none';
+            progressFill.style.width = '0%';
+            
+            // Set activity name
+            timerActivityName.textContent = task.name;
+            
+            // Update timer display
+            timerDisplay.textContent = formatTime(timeLeft);
+            
+            // Show timer container and scroll to it
+            timerContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Start timer
+        function startTimer() {
+            if (!timerRunning && timeLeft > 0) {
+                timerRunning = true;
+                timer = setInterval(() => {
+                    timeLeft--;
+                    timerDisplay.textContent = formatTime(timeLeft);
+                    
+                    // Update progress bar
+                    const progress = ((totalTime - timeLeft) / totalTime) * 100;
+                    progressFill.style.width = `${progress}%`;
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(timer);
+                        timerRunning = false;
+                        completeMessage.style.display = 'block';
+                        
+                        // Check the corresponding checkbox
+                        document.querySelectorAll('.task-card').forEach(card => {
+                            if (card.dataset.id === currentActivity.id) {
+                                const checkbox = card.querySelector('.checkbox');
+                                checkbox.classList.add('checked');
+                            }
+                        });
+                    }
+                }, 1000);
+            }
+        }
+        
+        // Pause timer
+        function pauseTimer() {
+            if (timerRunning) {
+                clearInterval(timer);
+                timerRunning = false;
+            }
+        }
+        
+        // Reset timer
+        function resetTimer() {
+            clearInterval(timer);
+            timerRunning = false;
+            timeLeft = totalTime;
+            timerDisplay.textContent = formatTime(timeLeft);
+            progressFill.style.width = '0%';
+            completeMessage.style.display = 'none';
+        }
+        
+        // Gérer les tabs
+        function switchTab(tabId) {
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.tab-button[data-tab="${tabId}"]`).classList.add('active');
+        }
+        
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Event listeners pour les onglets
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    switchTab(this.dataset.tab);
+                });
+            });
+            
+            // Event listeners pour les durées des tâches
+            taskDurationInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    const taskCard = this.closest('.task-card');
+                    const taskId = taskCard.dataset.id;
+                    const taskIndex = tasks.findIndex(t => t.id === taskId);
+                    if (taskIndex !== -1) {
+                        tasks[taskIndex].duration = parseInt(this.value);
+                        taskCard.dataset.time = this.value;
+                    }
+                });
+            });
+            
+            // Event listener pour le bouton principal
+            mainButton.addEventListener('click', () => {
+                // Trouver la première tâche non cochée
+                const firstUnchecked = document.querySelector('.task-card:not(.checked)');
+                if (firstUnchecked) {
+                    const taskId = firstUnchecked.dataset.id;
+                    const task = tasks.find(t => t.id === taskId);
+                    if (task) {
+                        startActivity(task);
+                    }
+                }
+            });
+            
+            // Event listeners pour le minuteur
+            startTimerBtn.addEventListener('click', startTimer);
+            pauseTimerBtn.addEventListener('click', pauseTimer);
+            resetTimerBtn.addEventListener('click', resetTimer);
+            
+            // Event listeners pour le modal d'ajout de tâche (premium)
+            addTaskButton.addEventListener('click', function() {
+                addTaskModal.style.display = 'flex';
+            });
+            
+            closeModalButton.addEventListener('click', function() {
+                addTaskModal.style.display = 'none';
+            });
+            
+            // Event listeners pour le modal des plans
+            showPlansButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                plansModal.style.display = 'flex';
+            });
+            
+            closePlansModalButton.addEventListener('click', function() {
+                plansModal.style.display = 'none';
+            });
+            
+            // Event listeners pour les boutons d'upgrade
+            upgradePremiumButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    plansModal.style.display = 'flex';
+                });
+            });
+            
+            // Fermer les modals en cliquant à l'extérieur
+            window.addEventListener('click', function(e) {
+                if (e.target === addTaskModal) {
+                    addTaskModal.style.display = 'none';
+                }
+                if (e.target === plansModal) {
+                    plansModal.style.display = 'none';
+                }
+            });
+            
+            // Empêcher l'utilisation des fonctionnalités premium
+            themeOptions.forEach(option => {
+                if (option.classList.contains('premium-feature')) {
+                    option.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        plansModal.style.display = 'flex';
+                    });
+                } else {
+                    option.addEventListener('click', function() {
+                        document.body.className = '';
+                        document.body.classList.add(`theme-${this.dataset.theme}`);
+                        
+                        themeOptions.forEach(opt => {
+                            opt.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <h3 class="modal-title">Fonctionnalité Premium</h3>
+            <div class="upgrade-info">
+                <div class="upgrade-info-title">Personnalisez vos tâches</div>
+                <p class="upgrade-info-text">Créez des tâches adaptées à vos besoins, définissez vos propres activités et construisez votre routine idéale.</p>
+                <a href="#" class="upgrade-button" id="upgrade-from-modal">Passer au Premium</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal des plans d'abonnement -->
+    <div class="modal" id="plans-modal">
+        <div class="modal
