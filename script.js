@@ -59,24 +59,23 @@ function deactivatePremium() {
 // Appliquer l'état premium à l'interface
 function applyPremiumStatus() {
     const isPremium = isPremiumUser();
+    console.log("Status premium vérifié:", isPremium);
     
-    // Débloquer les onglets premium
     if (isPremium) {
         // Supprimer les overlays premium
         document.querySelectorAll('.premium-overlay').forEach(overlay => {
             overlay.style.display = 'none';
         });
         
-        // Rendre les thèmes premium disponibles
-        document.querySelectorAll('.theme-option.premium-feature').forEach(theme => {
-            theme.classList.remove('premium-feature');
+        // Enlever la classe premium-feature des onglets et contenus premium
+        document.querySelectorAll('.premium-feature').forEach(element => {
+            element.classList.remove('premium-feature');
         });
         
-        // Activer le bouton d'ajout de tâche
-        const addTaskButton = document.getElementById('add-task-button');
-        if (addTaskButton) {
-            addTaskButton.classList.remove('premium-feature');
-        }
+        // Rendre les thèmes premium disponibles
+        document.querySelectorAll('.theme-option').forEach(theme => {
+            theme.classList.remove('premium-feature');
+        });
         
         // Mettre à jour le texte des boutons premium
         const premiumButtons = document.querySelectorAll('.upgrade-button');
