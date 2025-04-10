@@ -258,5 +258,67 @@
     </footer>
     
     <script src="script.js"></script>
+    // Ce script permet de vérifier et de corriger les liens de paiement
+// Ajouter ce script à la fin de votre page, juste avant la fermeture de la balise body
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Sélectionner tous les boutons avec la classe upgrade-button et les liens vers payment.html
+    const paymentLinks = document.querySelectorAll('a[href="payment.html"], .upgrade-button');
+    
+    // Vérifier si le fichier payment.html existe
+    function checkFileExists(url) {
+        const http = new XMLHttpRequest();
+        http.open('HEAD', url, false);
+        try {
+            http.send();
+            return http.status !== 404;
+        } catch(e) {
+            console.error("Erreur lors de la vérification du fichier:", e);
+            return false;
+        }
+    }
+    
+    // Fixer les liens de paiement
+    paymentLinks.forEach(link => {
+        // Ajouter un gestionnaire d'événements de journalisation pour chaque lien
+        link.addEventListener('click', function(e) {
+            console.log('Lien de paiement cliqué:', this.href);
+            
+            // Vérifier si payment.html existe
+            if (!checkFileExists('payment.html')) {
+                console.error('Le fichier payment.html n\'existe pas!');
+                alert('La page de paiement n\'est pas disponible. Veuillez vérifier que le fichier payment.html existe.');
+                e.preventDefault(); // Empêcher la navigation si le fichier n'existe pas
+            }
+        });
+        
+        // S'assurer que tous les liens ont la bonne URL
+        if (!link.href || !link.href.includes('payment.html')) {
+            link.href = 'payment.html';
+            console.log('Lien corrigé:', link);
+        }
+    });
+    
+    // Vérifier également les gestionnaires d'événements JavaScript qui pourraient bloquer les liens
+    const showPlansButton = document.getElementById('show-plans-button');
+    if (showPlansButton) {
+        // Ajouter un nouveau gestionnaire qui ouvre directement la page payment.html
+        showPlansButton.addEventListener('click', function(e) {
+            window.location.href = 'payment.html';
+            e.preventDefault(); // Empêcher le comportement par défaut qui pourrait ouvrir le modal
+        });
+    }
+    
+    // Vérifier les boutons dans le modal des plans
+    const planCTAButtons = document.querySelectorAll('.plan-cta .upgrade-button');
+    planCTAButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            console.log('Bouton d\'abonnement cliqué');
+            window.location.href = 'payment.html';
+        });
+    });
+    
+    console.log('Script de vérification des liens de paiement chargé');
+});
 </body>
 </html>
