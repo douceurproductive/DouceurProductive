@@ -258,67 +258,73 @@
     </footer>
     
     <script src="script.js"></script>
+    <script>
     // Ce script permet de vérifier et de corriger les liens de paiement
-// Ajouter ce script à la fin de votre page, juste avant la fermeture de la balise body
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Sélectionner tous les boutons avec la classe upgrade-button et les liens vers payment.html
-    const paymentLinks = document.querySelectorAll('a[href="payment.html"], .upgrade-button');
-    
-    // Vérifier si le fichier payment.html existe
-    function checkFileExists(url) {
-        const http = new XMLHttpRequest();
-        http.open('HEAD', url, false);
-        try {
-            http.send();
-            return http.status !== 404;
-        } catch(e) {
-            console.error("Erreur lors de la vérification du fichier:", e);
-            return false;
-        }
-    }
-    
-    // Fixer les liens de paiement
-    paymentLinks.forEach(link => {
-        // Ajouter un gestionnaire d'événements de journalisation pour chaque lien
-        link.addEventListener('click', function(e) {
-            console.log('Lien de paiement cliqué:', this.href);
-            
-            // Vérifier si payment.html existe
-            if (!checkFileExists('payment.html')) {
-                console.error('Le fichier payment.html n\'existe pas!');
-                alert('La page de paiement n\'est pas disponible. Veuillez vérifier que le fichier payment.html existe.');
-                e.preventDefault(); // Empêcher la navigation si le fichier n'existe pas
-            }
+    document.addEventListener('DOMContentLoaded', function() {
+        // Force la navigation directe pour tous les boutons d'abonnement et boutons premium
+        const paymentLinks = document.querySelectorAll('a[href="payment.html"], .upgrade-button');
+        
+        paymentLinks.forEach(link => {
+            // Remplacer l'événement click par défaut
+            link.addEventListener('click', function(e) {
+                e.preventDefault(); // Empêcher le comportement par défaut
+                e.stopPropagation(); // Empêcher la propagation aux autres gestionnaires
+                
+                console.log("Redirection vers payment.html");
+                
+                // Redirection forcée vers payment.html
+                window.location.href = 'payment.html';
+                
+                return false;
+            }, true); // true pour capturer l'événement avant qu'il n'atteigne d'autres gestionnaires
         });
         
-        // S'assurer que tous les liens ont la bonne URL
-        if (!link.href || !link.href.includes('payment.html')) {
-            link.href = 'payment.html';
-            console.log('Lien corrigé:', link);
+        // Correction spécifique pour les modals
+        // Remplacer les gestionnaires d'événements qui pourraient ouvrir des modals au lieu de naviguer
+        
+        // Cibler spécifiquement le bouton "Passer au Premium"
+        const upgradePremiumButton = document.getElementById('show-plans-button');
+        if (upgradePremiumButton) {
+            upgradePremiumButton.onclick = function(e) {
+                e.preventDefault();
+                window.location.href = 'payment.html';
+                return false;
+            };
         }
-    });
-    
-    // Vérifier également les gestionnaires d'événements JavaScript qui pourraient bloquer les liens
-    const showPlansButton = document.getElementById('show-plans-button');
-    if (showPlansButton) {
-        // Ajouter un nouveau gestionnaire qui ouvre directement la page payment.html
-        showPlansButton.addEventListener('click', function(e) {
-            window.location.href = 'payment.html';
-            e.preventDefault(); // Empêcher le comportement par défaut qui pourrait ouvrir le modal
+        
+        // Gérer les boutons dans le modal des plans
+        const subscribeButtons = document.querySelectorAll('.plan-cta .upgrade-button, .plan-card .upgrade-button');
+        subscribeButtons.forEach(button => {
+            button.onclick = function(e) {
+                e.preventDefault();
+                window.location.href = 'payment.html';
+                return false;
+            };
         });
-    }
-    
-    // Vérifier les boutons dans le modal des plans
-    const planCTAButtons = document.querySelectorAll('.plan-cta .upgrade-button');
-    planCTAButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            console.log('Bouton d\'abonnement cliqué');
-            window.location.href = 'payment.html';
+        
+        // Gérer les boutons dans l'overlay premium
+        const premiumOverlayButtons = document.querySelectorAll('.premium-overlay .upgrade-button');
+        premiumOverlayButtons.forEach(button => {
+            button.onclick = function(e) {
+                e.preventDefault();
+                window.location.href = 'payment.html';
+                return false;
+            };
         });
+        
+        // Correction spécifique pour le bouton de fermeture du modal des plans
+        const closeModalButton = document.getElementById('close-plans-modal');
+        if (closeModalButton) {
+            const plansModal = document.getElementById('plans-modal');
+            if (plansModal) {
+                closeModalButton.onclick = function() {
+                    plansModal.style.display = 'none';
+                };
+            }
+        }
+        
+        console.log('Script de correction des liens de paiement chargé');
     });
-    
-    console.log('Script de vérification des liens de paiement chargé');
-});
+    </script>
 </body>
 </html>
